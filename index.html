@@ -374,7 +374,7 @@
       min-height: 180px;
     }
 
-    /* Memories Grid */
+    /* Memories Grid (Polaroid Polos Tanpa Caption) */
     .memories-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -398,16 +398,10 @@
     }
     .polaroid-card img {
       width: 100%;
-      height: 155px;
+      height: 165px;
       object-fit: cover;
       border-radius: 4px;
       display: block;
-    }
-    .polaroid-caption {
-      color: #1b3b2b;
-      font-family: 'Fredoka', sans-serif;
-      font-size: 0.8rem;
-      margin-top: 8px;
     }
 
     /* Video Frame */
@@ -599,7 +593,7 @@
     const TARGET_DATE = new Date("2026-11-25T00:00:00").getTime();
 
     // Teks Surat Final (Versi Gua-Lu)
-    const LETTER_CONTENT = `Happy birthday, Mom! 🎉 Selamat nambah umur (dan berkurang jatah hidupnya, wkwk). Doa terbaik buat lu di umur yang baru ini—semoga sehat terus, lancar rezekinya, dipermudah semua urusannya, dan apa pun yang lagi dikejar bisa kecapai satu per satu.
+    const LETTER_CONTENT = `Happy birthday, Mom! 🎉 Selamat nambah umur (dan berkurang jatah hidupnya, wkwk). Doa terbaik buat lu di umur yang baru ini semoga sehat terus, lancar rezekinya, dipermudah semua urusannya, dan apa pun yang lagi dikejar bisa kecapai satu per satu.
 
 Ke depannya nggak ada yang tahu bakal gimana, tapi semoga lu selalu dikasih hati yang lapang dan lebih tenang ngejalanin semuanya. Kalau kemarin-kemarin banyak capeknya, semoga tahun ini jauh lebih banyak hal-hal baiknya.
 
@@ -609,16 +603,16 @@ Makasih banyak udah mau bertemen sama gua selama ini, udah selalu ada dan ngebel
 
 Maaf cuma bisa ngasih kado kecil lewat web ini, tapi semoga cukup bikin hari ini lebih berkesan. Tetap jadi Mom yang gua kenal, dan jangan sampai lupa sama gua. Sekali lagi, selamat ulang tahun, Mom!`;
 
-    // Daftar 8 Foto & Caption di Galeri (Bisa lu edit caption-nya)
+    // Daftar 8 Foto di Galeri (Tanpa Caption)
     const GALLERY_ITEMS = [
-      { src: "assets/foto1.jpg"},
-      { src: "assets/foto2.jpg"},
-      { src: "assets/foto3.jpg"},
-      { src: "assets/foto4.jpg"},
-      { src: "assets/foto5.jpg"},
-      { src: "assets/foto6.jpg"},
-      { src: "assets/foto7.jpg"},
-      { src: "assets/foto8.jpg"}
+      "assets/foto1.jpg",
+      "assets/foto2.jpg",
+      "assets/foto3.jpg",
+      "assets/foto4.jpg",
+      "assets/foto5.jpg",
+      "assets/foto6.jpg",
+      "assets/foto7.jpg",
+      "assets/foto8.jpg"
     ];
 
     // ==========================================
@@ -794,12 +788,11 @@ Maaf cuma bisa ngasih kado kecil lewat web ini, tapi semoga cukup bikin hari ini
 
     const memoriesGrid = document.getElementById('memoriesGrid');
     const rotations = [-4, 3, -2, 4, 2, -3, 3, -2];
-    GALLERY_ITEMS.forEach((item, idx) => {
+    GALLERY_ITEMS.forEach((src, idx) => {
       const rot = rotations[idx % rotations.length];
       memoriesGrid.innerHTML += `
         <div class="polaroid-card" style="--rot: ${rot}deg;">
-          <img src="${item.src}" alt="Memory ${idx + 1}">
-          <div class="polaroid-caption">${item.caption}</div>
+          <img src="${src}" alt="Memory ${idx + 1}">
         </div>
       `;
     });
