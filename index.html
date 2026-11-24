@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Mom Faiza! 🎉</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-top: #1b3b2b;
+      --bg-bottom: #2d5a3f;
+      --card-bg: rgba(255, 253, 245, 0.12);
+      --card-border: rgba(253, 224, 71, 0.35);
+      --yellow-main: #fde047;
+      --yellow-hover: #facc15;
+      --green-accent: #86efac;
+      --text-light: #fefce8;
+      --text-muted: #d9f99d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at top, #27533c, var(--bg-top) 60%, #11261b);
+      color: var(--text-light);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    h1, h2, h3, .font-display {
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    /* Floating Cheerful Particles */
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(105vh) scale(0.8); opacity: 0; }
+      20% { opacity: 0.6; }
+      80% { opacity: 0.6; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    /* Music Floating Controller */
+    .music-pill {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      background: rgba(17, 38, 27, 0.85);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(10px);
+      padding: 8px 16px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--yellow-main);
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+    .music-pill:hover { transform: scale(1.05); }
+
+    /* Step Container */
+    .step {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      animation: fadeIn 0.7s ease forwards;
+    }
+
+    .step.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green-accent);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .main-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      color: var(--yellow-main);
+      line-height: 1.15;
+      margin-bottom: 10px;
+      text-shadow: 0 4px 20px rgba(253, 224, 71, 0.25);
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 480px;
+      margin-bottom: 28px;
+    }
+
+    /* Countdown Boxes */
+    .countdown-grid {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .time-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      border-radius: 18px;
+      width: 78px;
+      height: 88px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .time-box span {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .time-box small {
+      font-size: 0.65rem;
+      letter-spacing: 1.5px;
+      color: var(--yellow-main);
+      margin-top: 2px;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: var(--yellow-main);
+      color: #143022;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(253, 224, 71, 0.35);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--yellow-hover);
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Mini Game Box */
+    .game-arena {
+      width: 100%;
+      max-width: 420px;
+      height: 300px;
+      background: rgba(15, 35, 24, 0.7);
+      border: 2px dashed var(--yellow-main);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
+    }
+
+    .cake-target {
+      position: absolute;
+      font-size: 2.6rem;
+      cursor: pointer;
+      user-select: none;
+      transition: top 0.25s ease, left 0.25s ease, transform 0.1s;
+    }
+    .cake-target:active { transform: scale(0.85); }
+
+    .score-badge {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      color: var(--yellow-main);
+      margin-bottom: 14px;
+    }
+
+    /* Gift Box Step */
+    .gift-wrapper {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      margin: 20px 0;
+    }
+    .gift-wrapper:hover { transform: scale(1.08) rotate(-3deg); }
+    .gift-emoji {
+      font-size: 6.5rem;
+      filter: drop-shadow(0 0 25px rgba(253, 224, 71, 0.6));
+      animation: bounce 1.8s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    /* Hero Floating Polaroids */
+    .hero-polaroids {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .mini-polaroid {
+      background: #fff;
+      padding: 8px 8px 22px 8px;
+      border-radius: 6px;
+      width: 110px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+      transform: rotate(var(--rot));
+      transition: transform 0.3s;
+    }
+    .mini-polaroid:hover { transform: rotate(0deg) scale(1.1); }
+    .mini-polaroid img {
+      width: 100%;
+      height: 95px;
+      object-fit: cover;
+      border-radius: 3px;
+    }
+
+    /* Letter Glass Card */
+    .glass-card {
+      background: rgba(20, 48, 34, 0.78);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(16px);
+      border-radius: 24px;
+      padding: 28px;
+      max-width: 640px;
+      width: 100%;
+      text-align: left;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+      margin-bottom: 24px;
+    }
+
+    .letter-header {
+      font-family: 'Fredoka', sans-serif;
+      color: var(--yellow-main);
+      font-size: 1.2rem;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(253, 224, 71, 0.2);
+      padding-bottom: 10px;
+    }
+
+    .typewriter-text {
+      font-size: 0.96rem;
+      line-height: 1.75;
+      color: #fefce8;
+      white-space: pre-line;
+      min-height: 180px;
+    }
+
+    /* Memories Grid */
+    .memories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 18px;
+      max-width: 780px;
+      width: 100%;
+      margin-bottom: 28px;
+    }
+
+    .polaroid-card {
+      background: #fffdf7;
+      padding: 10px 10px 26px 10px;
+      border-radius: 6px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transform: rotate(var(--rot));
+      transition: all 0.3s ease;
+    }
+    .polaroid-card:hover {
+      transform: rotate(0deg) scale(1.06);
+      z-index: 5;
+    }
+    .polaroid-card img {
+      width: 100%;
+      height: 155px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+    .polaroid-caption {
+      color: #1b3b2b;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.8rem;
+      margin-top: 8px;
+    }
+
+    /* Video Frame */
+    .video-box {
+      max-width: 560px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      padding: 12px;
+      border-radius: 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+    }
+
+    video {
+      width: 100%;
+      border-radius: 14px;
+      display: block;
+      max-height: 420px;
+      background: #000;
+    }
+
+    /* Final Rotating Headline */
+    .final-headline {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      color: var(--yellow-main);
+      min-height: 75px;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Particles -->
+  <div id="particles"></div>
+
+  <!-- Audio Element (Anti-blokir browser karena dipicu klik tombol Start) -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="assets/bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <button class="music-pill" id="musicToggle" style="display:none;" onclick="toggleMusic()">
+    <span id="musicIcon">🎵</span> <span id="musicLabel">BGM: ON</span>
+  </button>
+
+  <!-- STEP 1: COUNTDOWN & START (TRIGGER AUDIO) -->
+  <section class="step active" id="step1">
+    <div class="eyebrow">✨ SPECIAL DAY FOR THE BEST MOM ✨</div>
+    <h1 class="main-title">Faiza's Level Up Day!</h1>
+    <p class="subtitle">Menghitung mundur hari paling seru buat sahabat terbaik sepanjang masa.</p>
+
+    <div class="countdown-grid">
+      <div class="time-box"><span id="days">00</span><small>HARI</small></div>
+      <div class="time-box"><span id="hours">00</span><small>JAM</small></div>
+      <div class="time-box"><span id="minutes">00</span><small>MENIT</small></div>
+      <div class="time-box"><span id="seconds">00</span><small>DETIK</small></div>
+    </div>
+
+    <button class="btn-primary" id="startBtn" onclick="startExperience()">
+      🚀 Mulai & Nyalakan Musik
+    </button>
+  </section>
+
+  <!-- STEP 2: MINI GAME TANGKAP KUE -->
+  <section class="step" id="step2">
+    <div class="eyebrow">🎮 WARMING UP DULU BIAR SERU</div>
+    <h2 class="main-title" style="font-size: 2.2rem;">Tangkap Kue Ulang Tahunnya!</h2>
+    <p class="subtitle">Eits, kadonya dikunci! Tangkap <strong>5 kue</strong> yang kabur-kaburan di bawah ini buat ngebuka kuncinya.</p>
+
+    <div class="score-badge">Skor Mom: <span id="gameScore">0</span> / 5 🎂</div>
+
+    <div class="game-arena" id="gameArena">
+      <div class="cake-target" id="cakeTarget" onclick="catchCake()">🎂</div>
+    </div>
+
+    <button class="btn-primary" id="unlockBtn" disabled onclick="goToStep(3)">
+      🔒 Kumpulkan 5 Kue Dulu
+    </button>
+  </section>
+
+  <!-- STEP 3: BUKA KADO INTERAKTIF -->
+  <section class="step" id="step3">
+    <div class="eyebrow">🎉 YEAY BERHASIL! ADA SESUATU BUAT MOM</div>
+    <h2 class="main-title" style="font-size: 2.3rem;">Kado Spesial Buat Faiza</h2>
+    <div class="gift-wrapper" onclick="goToStep(4)">
+      <div class="gift-emoji">🎁</div>
+    </div>
+    <p class="subtitle">Klik kotak kadonya buat buka isinya!</p>
+  </section>
+
+  <!-- STEP 4: HERO GREETING + POLAROID PREVIEW -->
+  <section class="step" id="step4">
+    <div class="eyebrow">🌟 FOR MY #1 BESTIE, MOM FAIZA 🌟</div>
+    <div class="hero-polaroids">
+      <div class="mini-polaroid" style="--rot: -6deg;"><img src="assets/foto1.jpg" alt="Foto 1"></div>
+      <div class="mini-polaroid" style="--rot: 4deg;"><img src="assets/foto2.jpg" alt="Foto 2"></div>
+      <div class="mini-polaroid" style="--rot: -3deg;"><img src="assets/foto3.jpg" alt="Foto 3"></div>
+    </div>
+    <h1 class="main-title">Happy Birthday, Mom!</h1>
+    <p class="subtitle">Dibuat khusus buat ngerayain bertambahnya umur manusia paling asik dan paling *the best*!</p>
+    <button class="btn-primary" onclick="startLetter()">
+      💌 Baca Surat Buat Mom
+    </button>
+  </section>
+
+  <!-- STEP 5: SURAT PANJANG (EFEK KETIKAN) -->
+  <section class="step" id="step5">
+    <h2 class="main-title" style="font-size: 2.2rem; margin-bottom: 18px;">A Note For Mom Faiza</h2>
+    <div class="glass-card">
+      <div class="letter-header">HAPPY BIRTHDAY, MOM FAIZA! 🌻✨</div>
+      <div class="typewriter-text" id="letterBox"></div>
+    </div>
+    <button class="btn-primary" id="toMemoriesBtn" style="display:none;" onclick="goToStep(6)">
+      📸 Lihat Galeri Kita
+    </button>
+  </section>
+
+  <!-- STEP 6: GALERI POLAROID -->
+  <section class="step" id="step6">
+    <div class="eyebrow">📷 CORE MEMORIES</div>
+    <h2 class="main-title" style="font-size: 2.3rem;">Our Random Moments</h2>
+    <p class="subtitle">Kumpulan bukti kekocakan dan serunya punya sahabat kayak Mom.</p>
+
+    <div class="memories-grid" id="memoriesGrid"></div>
+
+    <button class="btn-primary" onclick="goToStep(7)">
+      🎬 Putar Video Spesial
+    </button>
+  </section>
+
+  <!-- STEP 7: VIDEO MESSAGE -->
+  <section class="step" id="step7">
+    <div class="eyebrow">🎥 SPECIAL CLIP</div>
+    <h2 class="main-title" style="font-size: 2.3rem;">A Moment For You</h2>
+    <p class="subtitle">Musik latar bakal otomatis mengecil/berhenti pas videonya kamu play ya!</p>
+
+    <div class="video-box">
+      <video id="specialVideo" controls playsinline>
+        <source src="assets/video.mp4" type="video/mp4">
+        Browser kamu tidak mendukung pemutar video.
+      </video>
+    </div>
+
+    <button class="btn-primary" onclick="goToStep(8)">
+      🌟 Lanjut ke Birthday Wishes
+    </button>
+  </section>
+
+  <!-- STEP 8: BIRTHDAY WISHES -->
+  <section class="step" id="step8">
+    <div class="glass-card" style="text-align: center;">
+      <div class="letter-header" style="text-align: center;">🌻 Birthday Wishes For Faiza 🌻</div>
+      <p style="line-height: 1.8; font-size: 1rem;">
+        Semoga di usia yang baru ini, Mom Faiza selalu dikelilingi hal-hal baik, rezekinya lancar terus, sehat lahir batin, dan semua rencana besar yang lagi dikejar bisa terwujud satu per satu.<br><br>
+        Makasih udah selalu jadi tempat cerita paling nyaman, paling sabar ngadepin kelakuan randomku, dan selalu ada pas lagi butuh. <em>Stay awesome, stay cheerful, and keep shining, Mom!</em> 💛💚
+      </p>
+    </div>
+    <button class="btn-primary" onclick="startFinale()">
+      ✨ Lihat Penutup
+    </button>
+  </section>
+
+  <!-- STEP 9: FINALE ROTATING TEXT -->
+  <section class="step" id="step9">
+    <div class="eyebrow">🥳 CHEERS TO MANY MORE YEARS!</div>
+    <h1 class="final-headline font-display" id="finaleText">Happy Birthday Mom!</h1>
+    <p class="subtitle">Terima kasih sudah jadi sahabat terbaik di hidupku. Semoga kado kecil ini bikin hari ulang tahunmu makin berkesan!</p>
+    <button class="btn-primary" onclick="location.reload()">
+      🔄 Ulangi Dari Awal
+    </button>
+  </section>
+
+  <script>
+    // ==========================================
+    // 1. PENGATURAN YANG BISA KAMU EDIT SENDIRI
+    // ==========================================
+    
+    // Set tanggal ulang tahun Faiza (Format: YYYY-MM-DDTHH:MM:SS)
+    // Jika tanggal sudah lewat / hari ini, countdown otomatis jadi 00:00:00:00
+    const TARGET_DATE = new Date("2026-11-25T00:00:00").getTime();
+
+    // Teks Surat (Silakan kamu rapikan / ganti sesuka hati!)
+    const LETTER_CONTENT = `Selamat ulang tahun ya, Mom Faiza! 🎉 Hari ini hari yang spesial banget karena hari ini adalah hari lahirnya salah satu orang paling penting dan paling the best di hidupku.
+
+Makasih banyak udah selalu jadi sahabat yang super suportif, selalu bisa diajak diskusi hal serius maupun hal-hal nggak penting, dan selalu punya energi positif yang nular ke sekitar. Punya temen deket kayak Mom tuh bener-bener sebuah keberuntungan.
+
+Di umur yang baru ini, aku cuma mau doain semoga semua hal baik selalu dateng ke hidup Mom. Semoga sehat selalu, panjang umur, dilancarkan segala urusan kuliah/kerjaannya, dan semua impian yang lagi Mom kejar bisa kecapai satu per satu.
+
+Tetap jadi Mom Faiza yang asik, baik hati, dan ceria kayak sekarang ya. Jangan pernah sungkan cerita atau minta tolong apa pun kalau lagi butuh temen!
+
+Sekali lagi, happy level up day, Bestie! 🌻💚`;
+
+    // Daftar 8 Foto & Caption Lucu di Galeri
+    const GALLERY_ITEMS = [
+      { src: "assets/foto1.jpg", caption: "Partner kulineran #1 🍜" },
+      { src: "assets/foto2.jpg", caption: "Edisi sok candid 😎" },
+      { src: "assets/foto3.jpg", caption: "Ketawa tanpa sebab 😂" },
+      { src: "assets/foto4.jpg", caption: "Bestie goals banget ✨" },
+      { src: "assets/foto5.jpg", caption: "Momen random favorit 📸" },
+      { src: "assets/foto6.jpg", caption: "Always got your back 💛" },
+      { src: "assets/foto7.jpg", caption: "Vibes paling positif 🌿" },
+      { src: "assets/foto8.jpg", caption: "Cheers to more memories! 🥂" }
+    ];
+
+    // ==========================================
+    // 2. LOGIKA PARTIKEL & COUNTDOWN
+    // ==========================================
+    const particlesContainer = document.getElementById('particles');
+    const colors = ['#fde047', '#86efac', '#fef08a', '#bbf7d0'];
+    for (let i = 0; i < 28; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 10 + 5;
+      p.style.width = `${size}px`;
+      p.style.height = `${size}px`;
+      p.style.left = `${Math.random() * 100}%`;
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      p.style.animationDuration = `${Math.random() * 8 + 7}s`;
+      p.style.animationDelay = `${Math.random() * 5}s`;
+      particlesContainer.appendChild(p);
+    }
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = TARGET_DATE - now;
+
+      if (diff <= 0) {
+        document.getElementById('days').innerText = "00";
+        document.getElementById('hours').innerText = "00";
+        document.getElementById('minutes').innerText = "00";
+        document.getElementById('seconds').innerText = "00";
+        return;
+      }
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('days').innerText = String(d).padStart(2, '0');
+      document.getElementById('hours').innerText = String(h).padStart(2, '0');
+      document.getElementById('minutes').innerText = String(m).padStart(2, '0');
+      document.getElementById('seconds').innerText = String(s).padStart(2, '0');
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // ==========================================
+    // 3. SISTEM MUSIK ANTI BLOKIR + AUTO PAUSE VIDEO
+    // ==========================================
+    const bgMusic = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    const musicLabel = document.getElementById('musicLabel');
+    const specialVideo = document.getElementById('specialVideo');
+    let isMusicPlaying = false;
+
+    function startExperience() {
+      // Langsung play audio karena dipicu interaksi klik user langsung!
+      bgMusic.volume = 0.65;
+      bgMusic.play().then(() => {
+        isMusicPlaying = true;
+        musicToggle.style.display = 'flex';
+        musicLabel.innerText = 'BGM: ON';
+      }).catch(err => {
+        console.log("Audio file belum ditemukan atau diblokir:", err);
+        musicToggle.style.display = 'flex';
+        musicLabel.innerText = 'BGM: OFF';
+      });
+
+      goToStep(2);
+      moveCake();
+    }
+
+    function toggleMusic() {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        isMusicPlaying = true;
+        musicLabel.innerText = 'BGM: ON';
+      } else {
+        bgMusic.pause();
+        isMusicPlaying = false;
+        musicLabel.innerText = 'BGM: OFF';
+      }
+    }
+
+    // Otomatis pause BGM saat video diputar, dan lanjut lagi saat video selesai/di-pause
+    specialVideo.addEventListener('play', () => {
+      if (!bgMusic.paused) {
+        bgMusic.pause();
+        musicLabel.innerText = 'BGM: PAUSED (VIDEO)';
+      }
+    });
+
+    specialVideo.addEventListener('pause', () => {
+      if (isMusicPlaying && bgMusic.paused) {
+        bgMusic.play();
+        musicLabel.innerText = 'BGM: ON';
+      }
+    });
+
+    // ==========================================
+    // 4. NAVIGASI STEP & MINI GAME
+    // ==========================================
+    function goToStep(stepNumber) {
+      document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+      document.getElementById(`step${stepNumber}`).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    let score = 0;
+    const cakeTarget = document.getElementById('cakeTarget');
+    const gameArena = document.getElementById('gameArena');
+    let cakeInterval;
+
+    function moveCake() {
+      const maxX = gameArena.clientWidth - 60;
+      const maxY = gameArena.clientHeight - 60;
+      const randX = Math.max(10, Math.floor(Math.random() * maxX));
+      const randY = Math.max(10, Math.floor(Math.random() * maxY));
+      cakeTarget.style.left = `${randX}px`;
+      cakeTarget.style.top = `${randY}px`;
+    }
+
+    // Kue otomatis kabur tiap 1.1 detik biar agak ngeselin tapi seru
+    cakeInterval = setInterval(() => {
+      if (document.getElementById('step2').classList.contains('active') && score < 5) {
+        moveCake();
+      }
+    }, 1100);
+
+    function catchCake() {
+      if (score >= 5) return;
+      score++;
+      document.getElementById('gameScore').innerText = score;
+      moveCake();
+
+      if (score >= 5) {
+        clearInterval(cakeInterval);
+        cakeTarget.innerText = "🎉";
+        const unlockBtn = document.getElementById('unlockBtn');
+        unlockBtn.disabled = false;
+        unlockBtn.innerText = "🎁 Buka Kado Sekarang!";
+      }
+    }
+
+    // ==========================================
+    // 5. EFEK KETIKAN SURAT & RENDER GALERI
+    // ==========================================
+    function startLetter() {
+      goToStep(5);
+      const box = document.getElementById('letterBox');
+      box.innerHTML = "";
+      let i = 0;
+      const speed = 22; // kecepatan ketik (ms)
+
+      function typeWriter() {
+        if (i < LETTER_CONTENT.length) {
+          box.innerHTML += LETTER_CONTENT.charAt(i);
+          i++;
+          setTimeout(typeWriter, speed);
+        } else {
+          document.getElementById('toMemoriesBtn').style.display = 'inline-flex';
+        }
+      }
+      typeWriter();
+    }
+
+    // Render Galeri Polaroid
+    const memoriesGrid = document.getElementById('memoriesGrid');
+    const rotations = [-4, 3, -2, 4, 2, -3, 3, -2];
+    GALLERY_ITEMS.forEach((item, idx) => {
+      const rot = rotations[idx % rotations.length];
+      memoriesGrid.innerHTML += `
+        <div class="polaroid-card" style="--rot: ${rot}deg;">
+          <img src="${item.src}" alt="Memory ${idx + 1}">
+          <div class="polaroid-caption">${item.caption}</div>
+        </div>
+      `;
+    });
+
+    // ==========================================
+    // 6. FINALE ROTATING HEADLINE
+    // ==========================================
+    function startFinale() {
+      goToStep(9);
+      const phrases = [
+        "Happy Birthday, Mom Faiza! 🎂",
+        "The Best Friend Ever! 🌟",
+        "Stay Cheerful & Awesome! 🌻",
+        "Always Got Your Back! 💚💛"
+      ];
+      let pIdx = 0;
+      const finaleEl = document.getElementById('finaleText');
+
+      setInterval(() => {
+        pIdx = (pIdx + 1) % phrases.length;
+        finaleEl.style.opacity = 0;
+        setTimeout(() => {
+          finaleEl.innerText = phrases[pIdx];
+          finaleEl.style.opacity = 1;
+        }, 300);
+      }, 2800);
+    }
+  </script>
+</body>
+</html>
