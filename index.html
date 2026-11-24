@@ -60,27 +60,100 @@
       100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
     }
 
-    /* Music Floating Controller */
-    .music-pill {
+    /* Vinyl Music Widget (Pojok Kiri Bawah) */
+    .vinyl-widget {
       position: fixed;
       bottom: 20px;
-      right: 20px;
+      left: 20px;
       z-index: 100;
-      background: rgba(17, 38, 27, 0.85);
+      background: rgba(17, 38, 27, 0.88);
       border: 1px solid var(--card-border);
-      backdrop-filter: blur(10px);
-      padding: 8px 16px;
+      backdrop-filter: blur(12px);
+      padding: 8px 16px 8px 10px;
       border-radius: 999px;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      max-width: 270px;
+    }
+
+    .vinyl-widget:hover {
+      transform: scale(1.04);
+      border-color: var(--yellow-main);
+    }
+
+    .vinyl-disc {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: repeating-radial-gradient(
+        circle at center,
+        #18181b 0px,
+        #18181b 3px,
+        #27272a 4px,
+        #18181b 5px
+      );
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
-      color: var(--yellow-main);
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      transition: transform 0.2s;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      animation: spinVinyl 4s linear infinite;
+      animation-play-state: paused;
     }
-    .music-pill:hover { transform: scale(1.05); }
+
+    .vinyl-disc.spinning {
+      animation-play-state: running;
+    }
+
+    .vinyl-label {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--yellow-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vinyl-hole {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #11261b;
+    }
+
+    @keyframes spinVinyl {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .track-details {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      overflow: hidden;
+    }
+
+    .track-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--yellow-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .track-status {
+      font-size: 0.68rem;
+      color: var(--green-accent);
+      font-weight: 500;
+    }
 
     /* Step Container */
     .step {
@@ -91,7 +164,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 24px 24px 85px 24px;
       text-align: center;
       animation: fadeIn 0.7s ease forwards;
     }
@@ -363,6 +436,7 @@
       color: var(--yellow-main);
       min-height: 75px;
       margin-bottom: 12px;
+      transition: opacity 0.3s ease;
     }
   </style>
 </head>
@@ -371,20 +445,29 @@
   <!-- Background Particles -->
   <div id="particles"></div>
 
-  <!-- Audio Element (Anti-blokir browser karena dipicu klik tombol Start) -->
+  <!-- Audio Element -->
   <audio id="bgMusic" loop preload="auto">
     <source src="assets/bgm.mp3" type="audio/mpeg">
   </audio>
 
-  <button class="music-pill" id="musicToggle" style="display:none;" onclick="toggleMusic()">
-    <span id="musicIcon">🎵</span> <span id="musicLabel">BGM: ON</span>
-  </button>
+  <!-- Vinyl Music Player Widget (Pojok Kiri Bawah) -->
+  <div class="vinyl-widget" id="vinylWidget" onclick="toggleMusic()" title="Klik untuk Play / Pause lagu">
+    <div class="vinyl-disc" id="vinylDisc">
+      <div class="vinyl-label">
+        <div class="vinyl-hole"></div>
+      </div>
+    </div>
+    <div class="track-details">
+      <span class="track-title">Home - Edith Whiskers</span>
+      <span class="track-status" id="musicStatus">▶ Playing • Klik untuk Pause</span>
+    </div>
+  </div>
 
-  <!-- STEP 1: COUNTDOWN & START (TRIGGER AUDIO) -->
+  <!-- STEP 1: COUNTDOWN & START -->
   <section class="step active" id="step1">
     <div class="eyebrow">✨ SPECIAL DAY FOR THE BEST MOM ✨</div>
-    <h1 class="main-title">Faiza's Level Up Day!</h1>
-    <p class="subtitle">Menghitung mundur hari paling seru buat sahabat terbaik sepanjang masa.</p>
+    <h1 class="main-title">Happy Birthday, Mom!</h1>
+    <p class="subtitle">Hitung mundur hari spesial buat sahabat paling the best sepanjang masa.</p>
 
     <div class="countdown-grid">
       <div class="time-box"><span id="days">00</span><small>HARI</small></div>
@@ -417,8 +500,8 @@
 
   <!-- STEP 3: BUKA KADO INTERAKTIF -->
   <section class="step" id="step3">
-    <div class="eyebrow">🎉 YEAY BERHASIL! ADA SESUATU BUAT MOM</div>
-    <h2 class="main-title" style="font-size: 2.3rem;">Kado Spesial Buat Faiza</h2>
+    <div class="eyebrow">🎉 YEAY BERHASIL! ADA SESUATU BUAT LU</div>
+    <h2 class="main-title" style="font-size: 2.3rem;">Kado Spesial Buat Mom</h2>
     <div class="gift-wrapper" onclick="goToStep(4)">
       <div class="gift-emoji">🎁</div>
     </div>
@@ -434,17 +517,17 @@
       <div class="mini-polaroid" style="--rot: -3deg;"><img src="assets/foto3.jpg" alt="Foto 3"></div>
     </div>
     <h1 class="main-title">Happy Birthday, Mom!</h1>
-    <p class="subtitle">Dibuat khusus buat ngerayain bertambahnya umur manusia paling asik dan paling *the best*!</p>
+    <p class="subtitle">Gua bikin web kecil ini khusus buat ngerayain hari ulang tahun lu.</p>
     <button class="btn-primary" onclick="startLetter()">
-      💌 Baca Surat Buat Mom
+      💌 Baca Pesan Dari Gua
     </button>
   </section>
 
   <!-- STEP 5: SURAT PANJANG (EFEK KETIKAN) -->
   <section class="step" id="step5">
-    <h2 class="main-title" style="font-size: 2.2rem; margin-bottom: 18px;">A Note For Mom Faiza</h2>
+    <h2 class="main-title" style="font-size: 2.2rem; margin-bottom: 18px;">A Note For Mom</h2>
     <div class="glass-card">
-      <div class="letter-header">HAPPY BIRTHDAY, MOM FAIZA! 🌻✨</div>
+      <div class="letter-header">HAPPY BIRTHDAY, MOM! 🌻✨</div>
       <div class="typewriter-text" id="letterBox"></div>
     </div>
     <button class="btn-primary" id="toMemoriesBtn" style="display:none;" onclick="goToStep(6)">
@@ -456,7 +539,7 @@
   <section class="step" id="step6">
     <div class="eyebrow">📷 CORE MEMORIES</div>
     <h2 class="main-title" style="font-size: 2.3rem;">Our Random Moments</h2>
-    <p class="subtitle">Kumpulan bukti kekocakan dan serunya punya sahabat kayak Mom.</p>
+    <p class="subtitle">Kumpulan bukti kekocakan dan serunya bertemen sama lu, Mom.</p>
 
     <div class="memories-grid" id="memoriesGrid"></div>
 
@@ -469,7 +552,7 @@
   <section class="step" id="step7">
     <div class="eyebrow">🎥 SPECIAL CLIP</div>
     <h2 class="main-title" style="font-size: 2.3rem;">A Moment For You</h2>
-    <p class="subtitle">Musik latar bakal otomatis mengecil/berhenti pas videonya kamu play ya!</p>
+    <p class="subtitle">Lagu di piringan hitam bakal otomatis berhenti pas videonya lu play (atau bisa lu pause manual di pojok kiri bawah)!</p>
 
     <div class="video-box">
       <video id="specialVideo" controls playsinline>
@@ -486,10 +569,10 @@
   <!-- STEP 8: BIRTHDAY WISHES -->
   <section class="step" id="step8">
     <div class="glass-card" style="text-align: center;">
-      <div class="letter-header" style="text-align: center;">🌻 Birthday Wishes For Faiza 🌻</div>
+      <div class="letter-header" style="text-align: center;">🌻 Birthday Wishes For Mom 🌻</div>
       <p style="line-height: 1.8; font-size: 1rem;">
-        Semoga di usia yang baru ini, Mom Faiza selalu dikelilingi hal-hal baik, rezekinya lancar terus, sehat lahir batin, dan semua rencana besar yang lagi dikejar bisa terwujud satu per satu.<br><br>
-        Makasih udah selalu jadi tempat cerita paling nyaman, paling sabar ngadepin kelakuan randomku, dan selalu ada pas lagi butuh. <em>Stay awesome, stay cheerful, and keep shining, Mom!</em> 💛💚
+        Di hari-hari sebelumnya, sekarang, maupun selanjutnya, gua selalu doain yang terbaik buat lu, Mom. Semoga Tuhan selalu ngejaga lu di mana pun berada, selalu nuntun setiap langkah lu ke arah yang paling tepat, dan ngasih izin supaya semesta selalu memihak ke hidup lu.<br><br>
+        Semoga hari-hari lu ke depan selalu ditemani sama perasaan yang lapang dan ikhlas buat apa pun yang mungkin belum dikasih sekarang, karena gua yakin hal baik pasti dateng di waktu yang pas. Sehat terus, bahagia terus, dan semoga semua hal baik yang lu semogakan segera kejadian satu per satu. 💛💚
       </p>
     </div>
     <button class="btn-primary" onclick="startFinale()">
@@ -500,8 +583,8 @@
   <!-- STEP 9: FINALE ROTATING TEXT -->
   <section class="step" id="step9">
     <div class="eyebrow">🥳 CHEERS TO MANY MORE YEARS!</div>
-    <h1 class="final-headline font-display" id="finaleText">Happy Birthday Mom!</h1>
-    <p class="subtitle">Terima kasih sudah jadi sahabat terbaik di hidupku. Semoga kado kecil ini bikin hari ulang tahunmu makin berkesan!</p>
+    <h1 class="final-headline font-display" id="finaleText">Happy Birthday, Mom! 🎂</h1>
+    <p class="subtitle">Makasih udah jadi sahabat paling the best di hidup gua. Semoga kado kecil ini bikin hari ulang tahun lu makin berkesan!</p>
     <button class="btn-primary" onclick="location.reload()">
       🔄 Ulangi Dari Awal
     </button>
@@ -509,25 +592,24 @@
 
   <script>
     // ==========================================
-    // 1. PENGATURAN YANG BISA KAMU EDIT SENDIRI
+    // 1. PENGATURAN TANGGAL, TEKS & FOTO
     // ==========================================
     
     // Set tanggal ulang tahun Faiza (Format: YYYY-MM-DDTHH:MM:SS)
-    // Jika tanggal sudah lewat / hari ini, countdown otomatis jadi 00:00:00:00
     const TARGET_DATE = new Date("2026-11-25T00:00:00").getTime();
 
-    // Teks Surat (Silakan kamu rapikan / ganti sesuka hati!)
-    const LETTER_CONTENT = `Selamat ulang tahun ya, Mom Faiza! 🎉 Hari ini hari yang spesial banget karena hari ini adalah hari lahirnya salah satu orang paling penting dan paling the best di hidupku.
+    // Teks Surat Final (Versi Gua-Lu)
+    const LETTER_CONTENT = `Happy birthday, Mom! 🎉 Selamat nambah umur (dan berkurang jatah hidupnya, wkwk). Doa terbaik buat lu di umur yang baru ini—semoga sehat terus, lancar rezekinya, dipermudah semua urusannya, dan apa pun yang lagi dikejar bisa kecapai satu per satu.
 
-Makasih banyak udah selalu jadi sahabat yang super suportif, selalu bisa diajak diskusi hal serius maupun hal-hal nggak penting, dan selalu punya energi positif yang nular ke sekitar. Punya temen deket kayak Mom tuh bener-bener sebuah keberuntungan.
+Ke depannya nggak ada yang tahu bakal gimana, tapi semoga lu selalu dikasih hati yang lapang dan lebih tenang ngejalanin semuanya. Kalau kemarin-kemarin banyak capeknya, semoga tahun ini jauh lebih banyak hal-hal baiknya.
 
-Di umur yang baru ini, aku cuma mau doain semoga semua hal baik selalu dateng ke hidup Mom. Semoga sehat selalu, panjang umur, dilancarkan segala urusan kuliah/kerjaannya, dan semua impian yang lagi Mom kejar bisa kecapai satu per satu.
+Tetap jadi diri sendiri aja. Nggak usah terlalu dengerin omongan orang yang nggak penting atau ngebandingin diri sama orang lain, soalnya tiap orang punya jalannya masing-masing. Lu udah keren banget bisa bertahan sampai titik ini, jadi jangan lupa buat apresiasi diri sendiri dan tetap banyak senyum.
 
-Tetap jadi Mom Faiza yang asik, baik hati, dan ceria kayak sekarang ya. Jangan pernah sungkan cerita atau minta tolong apa pun kalau lagi butuh temen!
+Makasih banyak udah mau bertemen sama gua selama ini, udah selalu ada dan ngebela pas lagi susah maupun senang. Semoga kita best friend till Hannah wkwk.
 
-Sekali lagi, happy level up day, Bestie! 🌻💚`;
+Maaf cuma bisa ngasih kado kecil lewat web ini, tapi semoga cukup bikin hari ini lebih berkesan. Tetap jadi Mom yang gua kenal, dan jangan sampai lupa sama gua. Sekali lagi, selamat ulang tahun, Mom!`;
 
-    // Daftar 8 Foto & Caption Lucu di Galeri
+    // Daftar 8 Foto & Caption di Galeri (Bisa lu edit caption-nya)
     const GALLERY_ITEMS = [
       { src: "assets/foto1.jpg", caption: "Partner kulineran #1 🍜" },
       { src: "assets/foto2.jpg", caption: "Edisi sok candid 😎" },
@@ -536,7 +618,7 @@ Sekali lagi, happy level up day, Bestie! 🌻💚`;
       { src: "assets/foto5.jpg", caption: "Momen random favorit 📸" },
       { src: "assets/foto6.jpg", caption: "Always got your back 💛" },
       { src: "assets/foto7.jpg", caption: "Vibes paling positif 🌿" },
-      { src: "assets/foto8.jpg", caption: "Cheers to more memories! 🥂" }
+      { src: "assets/foto8.jpg", caption: "Best friend till Hannah! 🥂" }
     ];
 
     // ==========================================
@@ -583,25 +665,35 @@ Sekali lagi, happy level up day, Bestie! 🌻💚`;
     updateCountdown();
 
     // ==========================================
-    // 3. SISTEM MUSIK ANTI BLOKIR + AUTO PAUSE VIDEO
+    // 3. SISTEM MUSIK PIRINGAN HITAM + AUTO PAUSE VIDEO
     // ==========================================
     const bgMusic = document.getElementById('bgMusic');
-    const musicToggle = document.getElementById('musicToggle');
-    const musicLabel = document.getElementById('musicLabel');
+    const vinylWidget = document.getElementById('vinylWidget');
+    const vinylDisc = document.getElementById('vinylDisc');
+    const musicStatus = document.getElementById('musicStatus');
     const specialVideo = document.getElementById('specialVideo');
-    let isMusicPlaying = false;
+    let userWantsMusic = false;
+
+    function updateVinylUI(isPlaying, customLabel) {
+      if (isPlaying) {
+        vinylDisc.classList.add('spinning');
+        musicStatus.innerText = customLabel || '▶ Playing • Klik untuk Pause';
+      } else {
+        vinylDisc.classList.remove('spinning');
+        musicStatus.innerText = customLabel || '⏸ Paused • Klik untuk Play';
+      }
+    }
 
     function startExperience() {
-      // Langsung play audio karena dipicu interaksi klik user langsung!
       bgMusic.volume = 0.65;
+      vinylWidget.style.display = 'flex';
       bgMusic.play().then(() => {
-        isMusicPlaying = true;
-        musicToggle.style.display = 'flex';
-        musicLabel.innerText = 'BGM: ON';
+        userWantsMusic = true;
+        updateVinylUI(true);
       }).catch(err => {
         console.log("Audio file belum ditemukan atau diblokir:", err);
-        musicToggle.style.display = 'flex';
-        musicLabel.innerText = 'BGM: OFF';
+        userWantsMusic = false;
+        updateVinylUI(false);
       });
 
       goToStep(2);
@@ -611,27 +703,26 @@ Sekali lagi, happy level up day, Bestie! 🌻💚`;
     function toggleMusic() {
       if (bgMusic.paused) {
         bgMusic.play();
-        isMusicPlaying = true;
-        musicLabel.innerText = 'BGM: ON';
+        userWantsMusic = true;
+        updateVinylUI(true);
       } else {
         bgMusic.pause();
-        isMusicPlaying = false;
-        musicLabel.innerText = 'BGM: OFF';
+        userWantsMusic = false;
+        updateVinylUI(false);
       }
     }
 
-    // Otomatis pause BGM saat video diputar, dan lanjut lagi saat video selesai/di-pause
     specialVideo.addEventListener('play', () => {
       if (!bgMusic.paused) {
         bgMusic.pause();
-        musicLabel.innerText = 'BGM: PAUSED (VIDEO)';
+        updateVinylUI(false, '⏸ Paused (Video diputar)');
       }
     });
 
     specialVideo.addEventListener('pause', () => {
-      if (isMusicPlaying && bgMusic.paused) {
+      if (userWantsMusic && bgMusic.paused) {
         bgMusic.play();
-        musicLabel.innerText = 'BGM: ON';
+        updateVinylUI(true);
       }
     });
 
@@ -658,7 +749,6 @@ Sekali lagi, happy level up day, Bestie! 🌻💚`;
       cakeTarget.style.top = `${randY}px`;
     }
 
-    // Kue otomatis kabur tiap 1.1 detik biar agak ngeselin tapi seru
     cakeInterval = setInterval(() => {
       if (document.getElementById('step2').classList.contains('active') && score < 5) {
         moveCake();
@@ -688,7 +778,7 @@ Sekali lagi, happy level up day, Bestie! 🌻💚`;
       const box = document.getElementById('letterBox');
       box.innerHTML = "";
       let i = 0;
-      const speed = 22; // kecepatan ketik (ms)
+      const speed = 22;
 
       function typeWriter() {
         if (i < LETTER_CONTENT.length) {
@@ -702,7 +792,6 @@ Sekali lagi, happy level up day, Bestie! 🌻💚`;
       typeWriter();
     }
 
-    // Render Galeri Polaroid
     const memoriesGrid = document.getElementById('memoriesGrid');
     const rotations = [-4, 3, -2, 4, 2, -3, 3, -2];
     GALLERY_ITEMS.forEach((item, idx) => {
@@ -721,10 +810,10 @@ Sekali lagi, happy level up day, Bestie! 🌻💚`;
     function startFinale() {
       goToStep(9);
       const phrases = [
-        "Happy Birthday, Mom Faiza! 🎂",
+        "Happy Birthday, Mom! 🎂",
         "The Best Friend Ever! 🌟",
-        "Stay Cheerful & Awesome! 🌻",
-        "Always Got Your Back! 💚💛"
+        "Best Friend Till Hannah! 😂",
+        "Stay Cheerful & Awesome! 🌻"
       ];
       let pIdx = 0;
       const finaleEl = document.getElementById('finaleText');
